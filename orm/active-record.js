@@ -31,7 +31,7 @@
             this.sendJson(JSON.stringify(object));
             break;
         case this.SEND_TYPE.XML:
-            this.sendXML(xmlData); //todo: Who should provide xml data?
+            this.sendXML(xmlSerializer(object)); //move responsibility of providing xml data to function 
         default:
             new Error('Unknown data type.');
         }
@@ -43,8 +43,12 @@
     }; //interface ??
 
     var one = new Object(); //abstract example
-    one.save(dataTranport);
+    one.save(dataTranport); //maybe object should itself set dataTransport and type of data which will be sent?
 
+    //helpers
 
+    function xmlSerializer(object) {
+        return "<object>xml fake</object>"; //it is not correct xml, just for working
+    }
 
 })();
