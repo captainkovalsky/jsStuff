@@ -11,6 +11,7 @@
 
     DataTransport.prototype.SEND_TYPE = {
         JSON: undefined,
+        XML: undefined,
         BINARY: undefined
     };
 
@@ -18,12 +19,19 @@
         console.log('send json: ', toSendJson);
     }
 
-    DataTransport.prototype.send = function () {
+
+    DataTransport.prototype.sendXml = function (toSendXml) {
+        console.log('send xml: ', toSendXml);
+    }
+
+    DataTransport.prototype.send = function (object) {
         //detect type and choice best method for sending data
         switch (this.type) {
         case this.SEND_TYPE.JSON:
-            this.sendJson(this.data);
+            this.sendJson(JSON.stringify(object));
             break;
+        case this.SEND_TYPE.XML:
+            this.sendXML(xmlData); //todo: Who should provide xml data?
         default:
             new Error('Unknown data type.');
         }
@@ -31,9 +39,7 @@
 
 
     Object.prototype.save = function (dataTransport) {
-        if (dataTransport.SEND_TYPE.JSON === dataTransport.type) {
-            dataTransport.send(JSON.stringify(this));
-        }
+        dataTransport.send(this);
     }; //interface ??
 
     var one = new Object(); //abstract example
