@@ -1,15 +1,17 @@
+// Code goes here
+
 /*** ACTIVE RECORD ***/
 (function () {
     'use strict';
 
-
     function Object() {}
 
+    function DataTransport() {}
 
-    DataTransport.prototype.SEND_TYPE = {
-        JSON: undefined,
-        XML: undefined,
-        BINARY: undefined
+    DataTransport.SEND_TYPE = {
+        JSON: 1,
+        XML: 2,
+        BINARY: 3
     };
 
     function JsonDataTransport() {}
@@ -30,10 +32,10 @@
     }
 
     function dataTransportFactory(type) {
-        switch (this.type) {
-        case this.SEND_TYPE.JSON:
+        switch (type) {
+        case DataTransport.SEND_TYPE.JSON:
             return new JsonDataTransport();
-        case this.SEND_TYPE.XML:
+        case DataTransport.SEND_TYPE.XML:
             return new XmlDataTransport();
         default:
             new Error('Unknown data type.');
