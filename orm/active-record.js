@@ -5,9 +5,6 @@
 
     function Object() {}
 
-    function DataTransport(type) {
-        this.type = type;
-    }
 
     DataTransport.prototype.SEND_TYPE = {
         JSON: undefined,
@@ -15,25 +12,29 @@
         BINARY: undefined
     };
 
-    //todo: methods send[Json|Xml] should be replaced by one send, 
-    // and must be added two DataTransport types - JsonDataTransport, XmlDataTransport
-    DataTransport.prototype.sendJson = function (toSendJson) { //
-        console.log('send json: ', toSendJson);
+    function JsonDataTransport() {}
+
+    function XmlDataTransport() {}
+
+
+    JsonDataTransport.prototype.send = function (object) {
+        console.log('send json ', JSON.stringify(object));
     }
 
-
-    DataTransport.prototype.sendXml = function (toSendXml) {
-        console.log('send xml: ', toSendXml);
+    XmlDataTransport.prototype.xmlSerializer = function (object) {
+        return "<object>xml fake</object>";
     }
 
-    DataTransport.prototype.send = function (object) {
-        //detect type and choice best method for sending data
-        switch (this.type) { //todo:anti-pattern,  switch('if-else') should be replaced, polymorphism appreciated
+    XmlDataTransport.prototype.send = function (object) {
+        console.log('send xml ', this.xmlSerializer(object));
+    }
+
+    function dataTransportFactory(type) {
+        switch (this.type) {
         case this.SEND_TYPE.JSON:
-            this.sendJson(JSON.stringify(object));
-            break;
+            return new JsonDataTransport();
         case this.SEND_TYPE.XML:
-            this.sendXML(xmlSerializer(object)); //move responsibility of providing xml data to function 
+            return new XmlDataTransport();
         default:
             new Error('Unknown data type.');
         }
@@ -44,13 +45,8 @@
         dataTransport.send(this);
     }; //interface ??
 
-    var one = new Object(); //abstract example
-    one.save(dataTranport); //maybe object should itself set dataTransport and type of data which will be sent?
-
-    //helpers
-
-    function xmlSerializer(object) {
-        return "<object>xml fake</object>"; //it is not correct xml, just for working
-    }
+    var one = new Object();
+    one.save(dataTransportFactory(DataTransport.SEND_TYPE.JSON));
+    one.save(dataTransportFactory(DataTransport.SEND_TYPE.XML));
 
 })();
