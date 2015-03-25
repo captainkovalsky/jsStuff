@@ -15,7 +15,9 @@
         BINARY: undefined
     };
 
-    DataTransport.prototype.sendJson = function (toSendJson) {
+    //todo: methods send[Json|Xml] should be replaced by one send, 
+    // and must be added two DataTransport types - JsonDataTransport, XmlDataTransport
+    DataTransport.prototype.sendJson = function (toSendJson) { //
         console.log('send json: ', toSendJson);
     }
 
@@ -26,7 +28,7 @@
 
     DataTransport.prototype.send = function (object) {
         //detect type and choice best method for sending data
-        switch (this.type) {
+        switch (this.type) { //todo:anti-pattern,  switch('if-else') should be replaced, polymorphism appreciated
         case this.SEND_TYPE.JSON:
             this.sendJson(JSON.stringify(object));
             break;
