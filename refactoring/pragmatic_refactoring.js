@@ -12,16 +12,16 @@ function getRate(state) {
     case OHIO:
         return OH_RATE;
     case MAINE:
-        retunr MN_RATE;
+        return MN_RATE;
     default:
         return 1;
     }
 }
 
-function getAmt(state, base) {
+function getAmt(state, rate) {
     switch (state) {
     case TEXAS:
-        return base * getRate(state);
+        return base * rate;
     default:
         return base;
     }
@@ -41,7 +41,7 @@ function getPoints(state) {
 
 function toRefactor() {
     var rate = getRate(state);
-    var amt = getAmt(state, base);
+    var amt = getAmt(state, rate);
     var calc = getCalc(amt);
     var points = getPoints(state);
 }
