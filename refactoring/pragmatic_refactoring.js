@@ -18,16 +18,13 @@ function getRate(state) {
     }
 }
 
-function getAmt(state, rate) {
-    switch (state) {
-    case TEXAS:
-        return base * rate;
-    default:
-        return base;
-    }
+function getAmt(state) {
+    var rate = getRate(state);
+    return base * rate;
 }
 
-function getCalc(amt) {
+function getCalc(state) {
+    var amt = getAmt(state);
     return 2 * basis(amt) + extra(amt) * 1.05;
 }
 
@@ -41,7 +38,7 @@ function getPoints(state) {
 
 function toRefactor() {
     var rate = getRate(state);
-    var amt = getAmt(state, rate);
-    var calc = getCalc(amt);
+    var amt = getAmt(state);
+    var calc = getCalc(state);
     var points = getPoints(state);
 }
