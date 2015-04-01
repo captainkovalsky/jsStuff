@@ -27,8 +27,7 @@ function getAmt(state, base) {
     }
 }
 
-function getCalc(state, base) {
-    var amt = getAmt(state, base);
+function getCalc(amt) {
     return 2 * basis(amt) + extra(amt) * 1.05;
 }
 
@@ -43,6 +42,6 @@ function getPoints(state) {
 function toRefactor() {
     var rate = getRate(state);
     var amt = getAmt(state, base);
-    var calc = getCalc(state, base);
+    var calc = getCalc(amt);
     var points = getPoints(state);
 }
