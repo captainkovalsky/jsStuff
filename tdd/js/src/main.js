@@ -6,6 +6,11 @@ function SubscriptionController($scope) {
         email: ''
     };
 
+    this.subscribe = function () {
+        $scope.notification = subscription.email + ' is subscribed.'; //@todo: must be change at all
+        subscription.email = '';
+    };
+
     $scope.subscription = subscription;
     $scope.notification = '';
 }

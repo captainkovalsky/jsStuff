@@ -8,9 +8,9 @@
 
 <body>
     <div ng-controller="SubscriptionController as ctrl">
-    <div id="notification">{{notification}}</div>
+    <div id="notification" ng-show=="notification">{{notification}}</div>
         <input type="text" name="email" ng-model="subscription.email" />
-        <button id="subscribe-button">Subscribe</button>
+        <button id="subscribe-button" ng-click="ctrl.subscribe();">Subscribe</button>
     </div>
     <script src="/js/src/main.js" type="text/javascript" charset="utf-8"></script>
 </body>
