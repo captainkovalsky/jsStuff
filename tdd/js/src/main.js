@@ -7,6 +7,7 @@ function SubscriptionController($scope) {
     };
 
     $scope.subscription = subscription;
+    $scope.notification = '';
 }
 
 testModule.controller('SubscriptionController', ['$scope', SubscriptionController]);

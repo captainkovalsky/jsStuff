@@ -8,7 +8,7 @@
 
 <body>
     <div ng-controller="SubscriptionController as ctrl">
-        <p>{{ subscription.email }}</p>
+    <div id="notification">{{notification}}</div>
         <input type="text" name="email" ng-model="subscription.email" />
         <button id="subscribe-button">Subscribe</button>
     </div>
