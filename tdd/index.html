@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html ng-app="testModule">
+
 <head>
-<title>Hello TDD</title>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js" type="text/javascript" charset="utf-8"></script>
+    <title>Hello TDD</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <body>
+    <div ng-controller="SubscriptionController as ctrl">
+        <p>{{ subscription.email }}</p>
+        <input type="text" name="email" ng-model="subscription.email" />
+        <button id="subscribe-button">Subscribe</button>
+    </div>
     <script src="/js/src/main.js" type="text/javascript" charset="utf-8"></script>
 </body>
+
 </html>
