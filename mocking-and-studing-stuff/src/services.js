@@ -16,9 +16,10 @@ testModule.service( 'serviceDep1', function serviceDepOne() {
 
 testModule.service( 'serviceDep2', [
     'serviceDep1', function serviceDepSecond( serviceOne ) {
-        this.doStuff = function ( value ) {
-            var serviceOneStuff = serviceOne.getSomething( value );
-            return 'Do my stuff and do ' + serviceOneStuff + ' serviceOne stuff';
+        this.value = 545;
+        this.doStuff = function () {
+            var serviceOneStuff = serviceOne.getSomething( this.value );
+            return serviceOneStuff + '2';
         };
     }
 ] );
