@@ -1,0 +1,25 @@
+{
+  "name": "native-sockets",
+  "version": "1.0.0",
+  "description": "Simple modules for learning websockets",
+  "main": "server.js",
+  "dependencies": {
+    "nodemon": "^1.3.7",
+    "ws": "^0.7.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vdzundza/jsStuff"
+  },
+  "author": "Viktor Dzundza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vdzundza/jsStuff/issues"
+  },
+  "homepage": "https://github.com/vdzundza/jsStuff"
+}
