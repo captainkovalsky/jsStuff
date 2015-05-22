@@ -4,7 +4,7 @@
     var WebSocketServer = require('ws').Server;
 
     var wss = new WebSocketServer({
-        port: 8080
+        port: 8082
     });
 
     wss.on('connection', function(ws) {
@@ -14,4 +14,5 @@
         ws.send('something');
     });
 
+    console.log("WS started");
 })();

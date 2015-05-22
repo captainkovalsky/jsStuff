@@ -7,10 +7,14 @@
     "nodemon": "^1.3.7",
     "ws": "^0.7.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "http-server": "^0.8.0",
+    "nodemon": "^1.3.7"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "web": "http-server ./ -a 127.0.0.1 -p 8081 -o"
   },
   "repository": {
     "type": "git",

@@ -1,9 +1,12 @@
 (function(window) {
     'use strict';
-
-    var HOSTNAME = '';
-    var ws = new WebSocket = ('ws://' + HOSTNAME);
-    ws.onOpen(onOpenHandler);
+    if (!window.WebSocket) {
+        alert('no webscoket');
+        return;
+    }
+    var ws = new WebSocket("ws://127.0.0.1:8082");
+    console.log(ws);
+    ws.onopen = onOpenHandler;
 
     var sendText;
 
@@ -18,7 +21,7 @@
     };
 
     var api = {
-        sendText: sendText;
+        sendText: sendText
     };
 
     window.wsClient = window.wsClient || {};
@@ -29,13 +32,14 @@
     'use strict';
 
     var sendButton = document.getElementById('sendButton');
-    var textArea = document.getELementsByTagName('textarea');
-
+    var textArea = document.getElementsByTagName('textarea');
+    console.log('text area', textArea);
     sendButton.addEventListener('click', sendText);
 
     function sendText(e) {
         var wsClient = window.wsClient;
+        var value = textArea[0].value;
         console.log('send value: ', value);
-        wsClient.sendText(textarea[0].value);
+        wsClient.sendText(value);
     }
 })(window);
