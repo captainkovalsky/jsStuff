@@ -1,10 +1,22 @@
  // Project configuration.
  module.exports = function(grunt) {
      grunt.initConfig({
+         karma: {
+             unit: {
+                 configFile: 'karma.conf.js',
+                 background: true,
+                 singleRun: false,
+                 tasks: ['karma:unit:run'] //NOTE the :run flag 
+             }
+         },
          watch: {
+             karma: {
+                 files: ['src/*.js', 'test/*.js'],
+                 tasks: ['karma:unit:run'] //NOTE the :run flag 
+             },
              scripts: {
-                 files: ['src/*.js'],
-                 tasks: ['complexity'],
+                 files: ['src/*.js', 'test/*.js'],
+                 tasks: ['complexity', 'karma'],
                  options: {
                      spawn: false,
                  },
@@ -15,7 +27,7 @@
          complexity: {
              generic: {
                  src: ['src/*.js'],
-                 exclude: ['doNotTest.js'],
+                 // exclude: ['doNotTest.js'],
                  options: {
                      breakOnErrors: true,
                      // jsLintXML: 'report.xml', // create XML JSLint-like report
@@ -34,5 +46,6 @@
 
      grunt.loadNpmTasks('grunt-complexity');
      grunt.loadNpmTasks('grunt-contrib-watch');
+     grunt.loadNpmTasks('grunt-karma');
      grunt.registerTask('default', 'watch');
  };
