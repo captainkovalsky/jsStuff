@@ -1,6 +1,17 @@
  // Project configuration.
  module.exports = function(grunt) {
      grunt.initConfig({
+         watch: {
+             scripts: {
+                 files: ['src/*.js'],
+                 tasks: ['complexity'],
+                 options: {
+                     spawn: false,
+                 },
+                 interrupt: true,
+                 debounceDelay: 1000
+             },
+         },
          complexity: {
              generic: {
                  src: ['src/*.js'],
@@ -22,5 +33,6 @@
      });
 
      grunt.loadNpmTasks('grunt-complexity');
-     grunt.registerTask('default', 'complexity');
+     grunt.loadNpmTasks('grunt-contrib-watch');
+     grunt.registerTask('default', 'watch');
  };
