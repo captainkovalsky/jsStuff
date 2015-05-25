@@ -1,0 +1,16 @@
+{
+  "name": "complexity",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-complexity": "^0.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Viktor Dzundza <victor.dzundza.dev@gmail.com>",
+  "license": "ISC"
+}
