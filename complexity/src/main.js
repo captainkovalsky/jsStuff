@@ -7,7 +7,6 @@ window.exports = {};
     function settledCalc(a, b, coeff) {
 
         var calculated = (a - 1) / (b + 2);
-        //sddd
         if (coef <= -5) {
             return a / b;
         } else if (coef <= 0) {
@@ -34,6 +33,12 @@ window.exports = {};
         }
     }
 
-    exports.calculateSomething = calculateSomething;
+    var myModule = {
+        calculateSomething: calculateSomething,
+        settledCalc: settledCalc,
+        nonSettledCalc: nonSettledCalc
+    };
+
+    exports.myModule = myModule;
 
 })(window.exports);

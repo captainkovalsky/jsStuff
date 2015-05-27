@@ -1,7 +1,14 @@
 describe('Main spec', function() {
 
-    it('true should be true', function() {
-        expect(true).toBeTruthy();
-        //sdfd
-    })
+    var a = 50;
+    var b = 100;
+
+    var myModule;
+
+    beforeEach(function() {
+        myModule = window.exports.myModule;
+    });
+
+
+
 });
