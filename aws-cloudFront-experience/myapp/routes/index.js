@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 var fs = require('fs');
-var Q = require('q');
 var util = require('util');
+var fileUtils = require('../service/fileUtils.js');
 
 //AWS
 var AWS = require('aws-sdk');
@@ -21,23 +21,18 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'AWS CloudFront Test' });
 });
 
-//METHODS
-function exists(file){
-	var defer = Q.defer();
-	fs.exists(file, defer.resolve);
-	return defer.promise;
-}
-//MUST BE MOVED
+
 
 router.get('/upload', function ( req, res, next ){
 	var s3 = new AWS.S3();
 	var filePath = 'data/meat.jpg';
-	exists(filePath)
+	fileUtils.exists(filePath)
 		.then(function(isExist){
 			if( !isExist ){
 				return res.status(404).json({error: FILE_DOESNT_EXIST});
 			}
 		});
+
 	var body = fs.createReadStream(filePath);
 	var s3obj = new AWS.S3({params: { Bucket: BUCKET_NAME, Key: 'meat.jpg' }});
 	s3obj.upload({Body: body}).
