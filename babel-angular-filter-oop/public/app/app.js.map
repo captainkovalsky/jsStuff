@@ -1,1 +1,0 @@
-{"version":3,"sources":["main.js"],"names":[],"mappings":";;;;uBAAA,SAAA;;;;AAEA,OAAA,CAAA,GAAA,CAAA,qBAAA,OAAA,CAAA,CAAA","file":"app.js","sourcesContent":["import angular from 'angular';\n\nconsole.log(angular.version);\n"],"sourceRoot":"/source/"}
