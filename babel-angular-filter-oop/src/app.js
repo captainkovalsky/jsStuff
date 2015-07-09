@@ -1,10 +1,11 @@
 import angular from 'angular';
 import {MainController} from './controllers/MainController';
-import {FilterFactory} from 'app/Filter';
+import {Filter} from 'app/Filter';
 
+console.log('fi;ter ', Filter);
 angular.module('myApp', [])
  .controller('MainController', MainController)
- .factory('FilterFactory', () => new FilterFactory)
+ .factory('Filter', () => {return Filter; })
 
 
 console.log(angular.version);
