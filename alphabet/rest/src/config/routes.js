@@ -10,6 +10,5 @@ module.exports = function(app) {
 
 	// YEOMAN INJECT ROUTES BELOW
   app.use(mount('/', require('../resources/root')));
-
-
+  app.use(mount('/api', require('../controls/root')));
 };
