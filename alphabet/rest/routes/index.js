@@ -1,8 +1,7 @@
 var express = require('express');
 
 var arugmentGrabber = require('../models/ArgumentGrabber.js');
-var Names = require('../models/Names.js');
-
+var NameLib  = require('../models/Names.js');
 var router = express.Router();
 
 /* GET home page. */
@@ -11,7 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/saveNames', function(req, res){
-  Names.saveNames().then(function(err){
+  NameLib.saveNames().then(function(err){
     return res.json({status: !!err ? 'error': 'saved'});
   });
 });

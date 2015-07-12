@@ -3,6 +3,7 @@
 var q = require('q');
 var request = require('request');
 var cheerio = require('cheerio');
+var NameLib  = require('../models/Names.js');
 
 var link = 'http://argumentua.com/stati/azbuka-vorovskogo-mira-ukrainy-lidery-opg-ot-do-ya-v-nachale-1990-kh-prodolzhenie-b';
 link = 'http://argumentua.com/stati/azbuka-vorovskogo-mira-ukrainy-lidery-opg-ot-do-ya-v-nachale-1990-kh-prodolzhenie-v';
@@ -33,7 +34,6 @@ function clearContentCriminals($block){
 }
 
 
-
 function tryToParseData(p){
   try{
     var error = '';
@@ -41,37 +41,40 @@ function tryToParseData(p){
     var $ = cheerio;
     var text = $(p).text();
     var firstSentence = text.split('.')[0];
+
     var firstThreeStatements = firstSentence.split(',').slice(0, 3);
     var name = firstThreeStatements[0];
     var year = firstThreeStatements[1];
     var city = firstThreeStatements[2];
 
+    var hasError = false;
+    if(name === undefined || name.indexOf("(") === 0){
+       def.reject('Cannot parse name from ' + text);
+       hasError = true;
+    }
 
+    if(year === undefined){
+       def.reject('Cannot parse year from ' + text);
+       hasError = true;
+    }
 
-    // var hasError = false;
-    // if(name === undefined || name.indexOf("(") === 0){
-    //    def.reject('Cannot parse name from ' + text);
-    //    hasError = true;
-    // }
-    //
-    // if(year === undefined){
-    //    def.reject('Cannot parse year from ' + text);
-    //    hasError = true;
-    // }
-    //
-    // if(city === undefined){
-    //    def.reject('Cannot parse city from ' + text);
-    //    hasError = true;
-    // }
+    if(city === undefined){
+       def.reject('Cannot parse city from ' + text);
+       hasError = true;
+    }
 
-    // if(hasError){
-    //   return def.promise;
-    // }
+    if(hasError){
+      return def.promise;
+    }
 
     name = name.split(' ');
+    var isName = NameLib.isName(name[1]);
+    var marks = NameLib.detectName(firstSentence);
+    console.log('marks for sentence ' + firstSentence + ' are ', marks);
+    // console.log('check whether '+ name[1] +' is name: ', isName );
     var data = {
-      firstName: name[0],
-      lastName: name[1],
+      firstName: name[1],
+      lastName: name[0],
       patronym: name[2],
       city: city,
       year: year,
@@ -129,7 +132,5 @@ var ArgumentGrabber = {
     return load(link);
   }
 };
-
-
 
 module.exports = ArgumentGrabber;
