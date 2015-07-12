@@ -15,6 +15,14 @@ router.get('/saveNames', function(req, res){
   });
 });
 
+router.get('/groupByCity', function(req, res){
+  var successFn = function(grouped){
+      return res.json(grouped);
+  };
+
+arugmentGrabber.loadData().then(arugmentGrabber.groupByCity).done(successFn);
+});
+
 router.get('/scrapData', function(req, res){
 
   var successFn = function(data){

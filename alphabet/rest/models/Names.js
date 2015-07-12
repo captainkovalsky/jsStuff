@@ -12,7 +12,7 @@ function isName(word){
   if(word === 'Нисан'){
     return true;
   }
-  console.log('check ', word);
+  // console.log('check ', word);
   return names.indexOf(word) !== -1;
 }
 

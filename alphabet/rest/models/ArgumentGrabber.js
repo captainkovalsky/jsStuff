@@ -7,6 +7,7 @@ var NameLib  = require('../models/Names.js');
 
 var link = 'http://argumentua.com/stati/azbuka-vorovskogo-mira-ukrainy-lidery-opg-ot-do-ya-v-nachale-1990-kh-prodolzhenie-b';
 link = 'http://argumentua.com/stati/azbuka-vorovskogo-mira-ukrainy-lidery-opg-ot-do-ya-v-nachale-1990-kh-prodolzhenie-v';
+link = 'http://argumentua.com/stati/azbuka-vorovskogo-mira-ukrainy-lidery-opg-1990-kh-rybka-ryabin-rata';
 var first = true;
 
 function cleanUpParagraphs(idx, paragraph){
@@ -33,6 +34,15 @@ function clearContentCriminals($block){
   $block.children('p').filter(cleanUpParagraphs).remove();
 }
 
+function groupByCity(data){
+  var group = {};
+  for(var i = 0, max = data.length; i < max; i++){
+    group[data[i].city] = group[data[i].city] || 0;
+    group[data[i].city]++;
+  }
+
+  return group;
+}
 
 function tryToParseData(p){
   try{
@@ -45,7 +55,7 @@ function tryToParseData(p){
     var firstThreeStatements = firstSentence.split(',').slice(0, 3);
     var name = firstThreeStatements[0];
     var year = firstThreeStatements[1];
-    var city = firstThreeStatements[2];
+    var fullCity = firstThreeStatements[2];
 
     var hasError = false;
     if(name === undefined || name.indexOf("(") === 0){
@@ -58,7 +68,7 @@ function tryToParseData(p){
        hasError = true;
     }
 
-    if(city === undefined){
+    if(fullCity === undefined){
        def.reject('Cannot parse city from ' + text);
        hasError = true;
     }
@@ -70,16 +80,30 @@ function tryToParseData(p){
     name = name.split(' ');
     var isName = NameLib.isName(name[1]);
     var marks = NameLib.detectName(firstSentence);
-    console.log('marks for sentence ' + firstSentence + ' are ', marks);
-    // console.log('check whether '+ name[1] +' is name: ', isName );
+    // console.log('marks for sentence ' + firstSentence + ' are ', marks);
+
+    var findFirstCapital = function(sentence, fromIndex){
+        var firstCapitalizedWord = 'NOT FOUND';
+        var words = sentence.split(' ').slice(fromIndex);
+        for(var i = 0, max = words.length; i < max; i++){
+          if(words[i][0] === words[i][0].toUpperCase()){
+            firstCapitalizedWord = words[i];
+            break;
+          }
+        }
+        return firstCapitalizedWord;
+
+    };
+
     var data = {
       firstName: name[1],
       lastName: name[0],
       patronym: name[2],
-      city: city,
+      fullCity: fullCity,
+      city: findFirstCapital(firstSentence, 6).replace(',',''),
       year: year,
-      fullText: text,
-      firstSentence: firstSentence,
+      fullText: text
+      // firstSentence: firstSentence,
     };
     def.resolve(data);
     }catch(e){
@@ -130,7 +154,8 @@ function load(link){
 var ArgumentGrabber = {
   loadData: function(){
     return load(link);
-  }
+  },
+  groupByCity: groupByCity
 };
 
 module.exports = ArgumentGrabber;
