@@ -10,9 +10,8 @@ router.get('/', function(req, res, next) {
 
 router.get('/scrapData', function(req, res){
 
-  var successFn = function(html){
-    // return res.json({html: html});
-    return res.send(html);
+  var successFn = function(data){
+    return res.json(data);
   };
 
   var errorFn = function(err){

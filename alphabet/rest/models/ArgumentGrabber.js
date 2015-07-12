@@ -30,13 +30,72 @@ function clearContentCriminals($block){
   $block.children('p').filter(cleanUpParagraphs).remove();
 }
 
-function tryToParseData(paragraph){
-  var $ = cheerio;
-  console.log('try to parse data from paragraph ', paragraph);
-  var def = q.defer();
-  return def.promise;
+
+function tryToParseData(p){
+  console.log('parse ');
+  try{
+    var error = '';
+    var def = q.defer();
+    var $ = cheerio;
+    var text = $(p).text();
+    var firstSentence = text.split('.')[0];
+    var firstThreeStatements = firstSentence.split(',').slice(0, 3);
+    var name = firstThreeStatements[0];
+    var year = firstThreeStatements[1];
+    var city = firstThreeStatements[2];
+
+    var hasError = false;
+    if(name === undefined){
+       def.reject('Cannot parse name from ' + text);
+       hasError = true;
+    }
+
+    if(year === undefined){
+       def.reject('Cannot parse year from ' + text);
+       hasError = true;
+    }
+
+    if(city === undefined){
+       def.reject('Cannot parse city from ' + text);
+       hasError = true;
+    }
+
+    if(hasError){
+      return def.promise;
+    }
+
+
+    var data = {
+      name: name,
+      city: city,
+      year: year
+    };
+    def.resolve(data);
+    }catch(e){
+      error = 'unable to parse data from ' + text;
+      def.reject(error);
+    }finally{
+      return def.promise;
+    }
 }
 
+function collectDataFrom(paragraphs){
+  var def = q.defer();
+  var data = [];
+  var successParseFn = function(criminal){
+    data.push(criminal)
+  };
+
+  var errorParseFn = function(error){
+    // data.push({error: error});
+  };
+
+  paragraphs.each(function(index, p){
+    tryToParseData(p).done(successParseFn, errorParseFn);
+  });
+  def.resolve(data);
+  return def.promise;
+}
 
 function load(link){
   var def = q.defer();
@@ -49,20 +108,7 @@ function load(link){
               normalizeWhitespace: true
             });
             clearContentCriminals($(CONTENT_CLASS));
-            var data = [];
-            var successParseFn = function(criminal){
-              data.push(criminal)
-            };
-
-            var errorParseFn = function(error){
-              data.push(error);
-            };
-
-            $(CONTENT_CLASS).children('p').each(function(index, p){
-              tryToParseData(p).done(successParseFn, errorParseFn);
-            });
-            def.resolve($(CONTENT_CLASS).html());
-            // def.resolve(data);
+            collectDataFrom($(CONTENT_CLASS).children('p')).then(def.resolve);
           }else{
             def.reject({error: 'something went wrong with loading data ...'});
           }
