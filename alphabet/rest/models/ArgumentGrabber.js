@@ -4,6 +4,7 @@ var q = require('q');
 var request = require('request');
 var cheerio = require('cheerio');
 var link = 'http://argumentua.com/stati/azbuka-vorovskogo-mira-ukrainy-lidery-opg-ot-do-ya-v-nachale-1990-kh-prodolzhenie-b';
+link = 'http://argumentua.com/stati/azbuka-vorovskogo-mira-ukrainy-lidery-opg-ot-do-ya-v-nachale-1990-kh-prodolzhenie-v';
 var first = true;
 
 function cleanUpParagraphs(idx, paragraph){
@@ -32,7 +33,6 @@ function clearContentCriminals($block){
 
 
 function tryToParseData(p){
-  console.log('parse ');
   try{
     var error = '';
     var def = q.defer();
@@ -44,36 +44,42 @@ function tryToParseData(p){
     var year = firstThreeStatements[1];
     var city = firstThreeStatements[2];
 
-    var hasError = false;
-    if(name === undefined){
-       def.reject('Cannot parse name from ' + text);
-       hasError = true;
-    }
-
-    if(year === undefined){
-       def.reject('Cannot parse year from ' + text);
-       hasError = true;
-    }
-
-    if(city === undefined){
-       def.reject('Cannot parse city from ' + text);
-       hasError = true;
-    }
-
-    if(hasError){
-      return def.promise;
-    }
 
 
+    // var hasError = false;
+    // if(name === undefined || name.indexOf("(") === 0){
+    //    def.reject('Cannot parse name from ' + text);
+    //    hasError = true;
+    // }
+    //
+    // if(year === undefined){
+    //    def.reject('Cannot parse year from ' + text);
+    //    hasError = true;
+    // }
+    //
+    // if(city === undefined){
+    //    def.reject('Cannot parse city from ' + text);
+    //    hasError = true;
+    // }
+
+    // if(hasError){
+    //   return def.promise;
+    // }
+
+    name = name.split(' ');
     var data = {
-      name: name,
+      firstName: name[0],
+      lastName: name[1],
+      patronym: name[2],
       city: city,
-      year: year
+      year: year,
+      fullText: text,
+      firstSentence: firstSentence,
     };
     def.resolve(data);
     }catch(e){
       error = 'unable to parse data from ' + text;
-      def.reject(error);
+      def.reject({error: error, message: e.message});
     }finally{
       return def.promise;
     }
@@ -83,11 +89,11 @@ function collectDataFrom(paragraphs){
   var def = q.defer();
   var data = [];
   var successParseFn = function(criminal){
-    data.push(criminal)
+    data.push(criminal);
   };
 
   var errorParseFn = function(error){
-    // data.push({error: error});
+    data.push(error);
   };
 
   paragraphs.each(function(index, p){
