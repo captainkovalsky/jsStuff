@@ -3,6 +3,7 @@
 var q = require('q');
 var request = require('request');
 var cheerio = require('cheerio');
+
 var link = 'http://argumentua.com/stati/azbuka-vorovskogo-mira-ukrainy-lidery-opg-ot-do-ya-v-nachale-1990-kh-prodolzhenie-b';
 link = 'http://argumentua.com/stati/azbuka-vorovskogo-mira-ukrainy-lidery-opg-ot-do-ya-v-nachale-1990-kh-prodolzhenie-v';
 var first = true;
@@ -30,6 +31,7 @@ function clearContentCriminals($block){
   $block.children('div, noscript, span, ul, blockquote, iframe, frame').remove();
   $block.children('p').filter(cleanUpParagraphs).remove();
 }
+
 
 
 function tryToParseData(p){
