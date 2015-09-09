@@ -21,13 +21,17 @@ class Report{
         // return this;
     // }
 
-    toPDF(){
-        //returns PDF report
-        return "PDF";
+    toPDF(destination){
+        //returns PDF report //another object should generate data
+        return fileWrite(destination, "PDF content here");
     }
 }
 
 var txtProvider, tcpDataProvider;
+var dest = "C:\\report.pdf";
 var report = new Report();
-report.fill(txtProvider).toPDF();
-report.fill(tcpDataProvider).toPDF();
+
+report.fill(txtProvider).toPDF(dest);
+report.fill(tcpDataProvider).toPDF(dest);
+
+
