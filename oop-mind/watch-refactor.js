@@ -4,7 +4,7 @@ function postLink(scope, element, attrs, ctrl, filterFilter, typeAheadService) {
 
     let selectionConfirmed = -1;
 
-    scope.$watch('query', function(val){
+    scope.$watch('query', function updateLocationList(val){
 
         if(!selectionConfirmed) {
             const addresses = typeAheadService.getAddressList();
