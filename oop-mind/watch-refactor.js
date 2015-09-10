@@ -25,7 +25,7 @@ postLink();
 
     //AFTER
 function postLink(scope, element, attrs, ctrl, filterFilter, typeAheadService) {
-    class Watcher{
+    const Watcher = class Watcher {
         selectionConfirmed = false;
 
         updateLocationList(val){
@@ -48,6 +48,7 @@ function postLink(scope, element, attrs, ctrl, filterFilter, typeAheadService) {
     var typeheadWatcher = new Watcher();
 
     var watcherFn = function(){
+        //first call will be fake
         watcherFn = typeheadWatcher.updateLocationList;
     };
 
