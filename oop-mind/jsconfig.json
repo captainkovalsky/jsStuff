@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"target": "ES6",
+		"module": "commonjs"
+	},
+	"files": [
+		"command-pattern.js",
+		"messages-approach-oop-design.js",
+		"watch-refactor.js",
+	]
+}
