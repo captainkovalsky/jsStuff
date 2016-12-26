@@ -1,0 +1,6 @@
+<p>
+  Product List
+    <app-search-box (searchChanged)="search($event)"></app-search-box>
+    <app-common-list [items]="getItems()"></app-common-list>
+    <app-pagination [itemsCount]="getItems().length" [perPage]="25"></app-pagination>
+</p>
