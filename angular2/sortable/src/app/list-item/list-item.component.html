@@ -1,0 +1,6 @@
+<li style="border: 1px solid red;"
+    dnd-sortable=""
+    [sortableIndex]="index">
+  {{item.text}} - {{index}} - {{item.value}}
+  <input type="number" [(ngModel)]="item.value"/>
+</li>

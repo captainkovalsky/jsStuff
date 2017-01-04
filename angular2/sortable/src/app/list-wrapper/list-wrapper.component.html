@@ -1,0 +1,11 @@
+<div>
+  <div dnd-sortable-container="" draggable="false" [sortableData]="items">
+    <app-list-item
+      [item]="item"
+      [index]="i"
+      *ngFor="let item of items; let i=index"
+      ></app-list-item>
+  </div>
+  <button *ngIf="isChanged()">Cancel changes</button>
+</div>
+
